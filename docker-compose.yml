@@ -2,11 +2,13 @@ version: '3.9'
 
 services:
   api:
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: api
-    build: .
     restart: unless-stopped
     volumes:
-      - ./:/app/
+      - /app
     ports:
       - "3000:3000"
     depends_on:
@@ -17,9 +19,9 @@ services:
     image: postgres:15
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
       - ./SQL/db/pgdata:/var/lib/postgresql/data
     expose:

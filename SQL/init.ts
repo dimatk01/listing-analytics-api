@@ -8,7 +8,8 @@ async function executeQuery() {
 
         const listingsTableCheck = await clientPg.query(`
             SELECT EXISTS (
-                SELECT FROM information_schema.tables 
+                SELECT 1
+                FROM information_schema.tables 
                 WHERE table_schema = 'public' 
                 AND table_name = 'listings'
             )
@@ -29,7 +30,8 @@ async function executeQuery() {
 
         const statisticsTableCheck = await clientPg.query(`
             SELECT EXISTS (
-                SELECT FROM information_schema.tables 
+                SELECT 1
+                FROM information_schema.tables 
                 WHERE table_schema = 'public' 
                 AND table_name = 'statistics'
             )
@@ -57,4 +59,5 @@ async function executeQuery() {
         await clientPg.end();
     }
 }
+
 executeQuery();
