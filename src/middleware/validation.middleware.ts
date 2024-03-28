@@ -1,5 +1,6 @@
 import {Context, Next} from "koa";
 import {Schema} from "joi";
+import logger from "../logger";
 
 export function validate(schema: Schema ) {
     return async (ctx: Context, next: Next) => {
@@ -8,15 +9,15 @@ export function validate(schema: Schema ) {
 
             if (error) {
                 ctx.status = 422;
-                console.log(error)
-                ctx.body = { error: error.details.map(e => e.message) };
+                ctx.body = { message: error.details.map(e => e.message) };
             } else {
                 ctx.request.body = value;
                 await next();
             }
-        } catch (err) {
+        } catch (err: any) {
+            logger.error(err?.message)
             ctx.status = 500;
-            ctx.body = { error: 'Internal Server Error' };
+            ctx.body = { message: 'Internal Server Error' };
         }
     };
 }
