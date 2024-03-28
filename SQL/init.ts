@@ -18,11 +18,15 @@ async function executeQuery() {
       CREATE TABLE statistics (
           id SERIAL PRIMARY KEY,
           autoId INTEGER UNIQUE,
-          viewsCount INTEGER DEFAULT 0,
-          viewsPhoneNumberCount INTEGER DEFAULT 0,
+          watch INTEGER DEFAULT 0,
+          goal INTEGER DEFAULT 0,
           FOREIGN KEY (autoId) REFERENCES listings(autoId) ON DELETE CASCADE
       )
     `);
+        /*
+        *  Де watch - перегляд сторінки лістингу
+        * goal - цільова дія, тобто, клік по номеру
+        */
 
         await clientPg.query('COMMIT');
         logger.info("The tables have been successfully created")
