@@ -1,6 +1,4 @@
 import Router from "koa-router";
-import {ListingRepository} from "../repository/listing.repository";
-import {ListingService} from "../services/listing.service";
 import {validate} from "../middleware/validation.middleware";
 import {StatisticService} from "../services/statistic.service";
 import {StatisticRepository} from "../repository/statistic.repository";

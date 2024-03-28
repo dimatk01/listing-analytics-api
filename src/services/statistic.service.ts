@@ -2,7 +2,6 @@ import {StatisticRepository} from "../repository/statistic.repository";
 import {Context} from "koa";
 import {Schema} from "joi";
 import {statisticSchema} from "../schema/statistic.schema";
-import {EventsTypes} from "../schema/events.types";
 
 export class StatisticService {
     constructor(private readonly statisticRepository: StatisticRepository) {

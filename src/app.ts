@@ -24,9 +24,10 @@ async function startServer() {
         .use(router.routes())
         .use(router.allowedMethods())
         .use(errorMiddleware)
-logger.info( router.stack.map(layer => layer.path))
+
     const port = process.env.APP_PORT
     app.listen(port, () => logger.info(`Server started at ${port} port`))
+    router.stack.forEach(layer => logger.info("Mapped " + layer.path))
 }
 
 startServer()

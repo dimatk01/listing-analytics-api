@@ -2,7 +2,6 @@ import {Context} from "koa";
 import {Schema} from "joi";
 import {listingSchema} from "../schema/listing.schema";
 import {ListingRepository} from "../repository/listing.repository";
-import logger from "../logger";
 
 export class ListingService {
 
