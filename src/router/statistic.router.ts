@@ -12,7 +12,7 @@ export const StatisticRouter =()=>{
     const statisticService = new StatisticService(statisticRepository)
 
     router.post("/", validate(statisticSchema), statisticService.addStatistic)
-    // router.get("/:id", listingService.getById)
+    router.get("/:id", statisticService.getStatistic)
 
     return router
 }
