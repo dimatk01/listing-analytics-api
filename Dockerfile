@@ -10,4 +10,4 @@ COPY . .
 
 RUN npm run build
 
-CMD ["node", "src/app.ts"]
+CMD ["npm", "run", "start"]
