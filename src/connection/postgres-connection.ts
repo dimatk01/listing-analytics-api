@@ -3,9 +3,9 @@ import {config} from "dotenv"
 config()
 
 export const clientPg = new Client({
-    user: process.env.DB_USERNAME,
+    user: process.env.POSTGRES_USER,
+    database: process.env.POSTGRES_DB,
+    password: process.env.POSTGRES_PASSWORD,
     host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
     port: Number(process.env.DB_PORT),
 });
