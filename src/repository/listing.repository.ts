@@ -50,6 +50,6 @@ export class ListingRepository {
               WHERE autoId = $1 
         `
         const {rows } = await clientPg.query(query, [id])
-        return rows?.pop()
+        return rows?.pop() ?? {}
     }
 }
