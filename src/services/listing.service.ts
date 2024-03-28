@@ -2,6 +2,7 @@ import {Context} from "koa";
 import {Schema} from "joi";
 import {listingSchema} from "../schema/listing.schema";
 import {ListingRepository} from "../repository/listing.repository";
+import logger from "../logger";
 
 export class ListingService {
 
@@ -19,14 +20,11 @@ export class ListingService {
         ctx.body = await this.listingRepository.addListing(title, description, ownerName, phoneNumber)
     }
 
-    addListing = async (ctx: Context) => {
+    getAll = async (ctx: Context) => {
         const {
-            title,
-            description,
-            ownerName,
-            phoneNumber
-        } = ctx.request.body as ReturnType<Schema<typeof listingSchema>["validate"]>["value"]
-        ctx.status = 201
-        ctx.body = await this.listingRepository.addListing(title, description, ownerName, phoneNumber)
+            page = 0, perPage = 10
+        } = ctx.request.query
+        ctx.status = 200
+        ctx.body = await this.listingRepository.getAll(+page, +perPage)
     }
 }

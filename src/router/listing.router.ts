@@ -8,6 +8,9 @@ export const ListingRouter = ()=>{
     const router = new Router()
     const listingRepository = new ListingRepository();
     const listingService = new ListingService(listingRepository)
+
     router.post("/", validate(listingSchema), listingService.addListing)
+    router.get("all","/all", listingService.getAll)
+
     return router
 }
