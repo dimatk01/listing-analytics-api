@@ -2,7 +2,8 @@
   "scripts": {
     "start:dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts",
     "build": " tsc",
-    "start": "node dist/SQL/init.js && node dist/src/app.ts"
+    "start": "node dist/SQL/init.js && node dist/src/app.ts",
+    "format": "prettier --write \"src/**/*.ts\""
   },
   "dependencies": {
     "@types/koa": "^2.15.0",
@@ -21,6 +22,7 @@
     "@types/koa-router": "^7.4.8",
     "@types/pg": "^8.11.4",
     "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3"
   }

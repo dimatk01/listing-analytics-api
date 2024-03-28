@@ -1,55 +1,64 @@
-import logger from "../logger";
-import {clientPg} from "../connection/postgres-connection";
+import logger from '../logger'
+import { clientPg } from '../connection/postgres-connection'
 
 export class ListingRepository {
-    constructor() {
-    }
+  constructor() {}
 
-    async addListing(title: string, description: string, ownerName: string, phoneNumber: string) {
-        try {
-            await clientPg.query('BEGIN');
+  async addListing(
+    title: string,
+    description: string,
+    ownerName: string,
+    phoneNumber: string,
+  ) {
+    try {
+      await clientPg.query('BEGIN')
 
-            const listingQuery = `
+      const listingQuery = `
       INSERT INTO listings (title, description, ownerName, phoneNumber)
       VALUES ($1, $2, $3, $4)
       RETURNING autoId;
-    `;
-            const listingValues = [title, description, ownerName, phoneNumber];
-            const listingResult = await clientPg.query(listingQuery, listingValues);
-            const autoId = listingResult.rows[0].autoid;
+    `
+      const listingValues = [title, description, ownerName, phoneNumber]
+      const listingResult = await clientPg.query(listingQuery, listingValues)
+      const autoId = listingResult.rows[0].autoid
 
-            const statisticQuery = `
+      const statisticQuery = `
       INSERT INTO statistics (autoId, watch, goal)
       VALUES ($1, 0, 0);
-    `;
-            const statisticValues = [autoId];
-            await clientPg.query(statisticQuery, statisticValues);
+    `
+      const statisticValues = [autoId]
+      await clientPg.query(statisticQuery, statisticValues)
 
-            await clientPg.query('COMMIT');
-            return {autoId}
-        } catch (error) {
-            await clientPg.query('ROLLBACK');
-            logger.error('Error creating listing', error);
-            throw new Error("Error creating listing")
-        }
+      await clientPg.query('COMMIT')
+      return { autoId }
+    } catch (error) {
+      await clientPg.query('ROLLBACK')
+      logger.error('Error creating listing', error)
+      throw new Error('Error creating listing')
     }
+  }
 
-    async getAll(page: number, perPage: number) {
-        const query = `SELECT * FROM listings
+  async getAll(page: number, perPage: number) {
+    const query = `SELECT * FROM listings
                 ORDER BY autoId
                 OFFSET $1
                 LIMIT $2;
         `
-        const {rows: result} = await clientPg.query(query, [page * perPage, perPage])
-        const {rows: count} = await clientPg.query("SELECT COUNT(*) FROM listings;")
-        return {result, count: +count[0]?.count}
-    }
+    const { rows: result } = await clientPg.query(query, [
+      page * perPage,
+      perPage,
+    ])
+    const { rows: count } = await clientPg.query(
+      'SELECT COUNT(*) FROM listings;',
+    )
+    return { result, count: +count[0]?.count }
+  }
 
-    async getById(id: number){
-        const query = `SELECT * FROM listings
+  async getById(id: number) {
+    const query = `SELECT * FROM listings
               WHERE autoId = $1 
         `
-        const {rows } = await clientPg.query(query, [id])
-        return rows?.pop() ?? {}
-    }
+    const { rows } = await clientPg.query(query, [id])
+    return rows?.pop() ?? {}
+  }
 }
