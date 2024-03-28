@@ -44,4 +44,12 @@ export class ListingRepository {
         const {rows: count} = await clientPg.query("SELECT COUNT(*) FROM listings;")
         return {result, count: +count[0]?.count}
     }
+
+    async getById(id: number){
+        const query = `SELECT * FROM listings
+              WHERE autoId = $1 
+        `
+        const {rows } = await clientPg.query(query, [id])
+        return rows?.pop()
+    }
 }

@@ -10,7 +10,8 @@ export const ListingRouter = ()=>{
     const listingService = new ListingService(listingRepository)
 
     router.post("/", validate(listingSchema), listingService.addListing)
-    router.get("all","/all", listingService.getAll)
+    router.get("/all", listingService.getAll)
+    router.get("/:id", listingService.getById)
 
     return router
 }

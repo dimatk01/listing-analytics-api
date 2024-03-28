@@ -27,4 +27,11 @@ export class ListingService {
         ctx.status = 200
         ctx.body = await this.listingRepository.getAll(+page, +perPage)
     }
+
+    getById = async (ctx: Context) => {
+        const url = ctx.request?.url
+        const id = url?.split("/").pop() ?? ""
+        ctx.status = 200
+        ctx.body = await this.listingRepository.getById(+id)
+    }
 }
