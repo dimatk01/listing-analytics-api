@@ -156,8 +156,7 @@
               "type": "string",
               "enum": [
                 "watch",
-                "goal",
-                ""
+                "goal"
               ]
             }
           },
