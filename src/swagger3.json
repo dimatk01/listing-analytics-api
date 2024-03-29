@@ -1,52 +1,52 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
-    "title": "Docs for my test app",
+    "title": "Docs for my task",
     "version": "2.0.0"
   },
-  "host": "localhost:3000",
-  "schemes": [
-    "http"
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
   ],
   "paths": {
     "/api/listing": {
       "post": {
         "summary": "Додати новий листинг",
-        "parameters": [
-          {
-            "name": "car",
-            "in": "body",
-            "description": "Дані про новий автомобіль",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "minLength": 3,
-                  "example": "Toyota Camry",
-                  "description": "Назва автомобіля"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Дуже надійний та економічний автомобіль",
-                  "description": "Опис автомобіля"
-                },
-                "ownerName": {
-                  "type": "string",
-                  "example": "Іван Петров",
-                  "description": "Ім'я власника"
-                },
-                "phoneNumber": {
-                  "type": "string",
-                  "minLength": 6,
-                  "example": "123456789",
-                  "description": "Номер телефону власника"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "example": "Toyota Camry",
+                    "description": "Назва автомобіля"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Дуже надійний та економічний автомобіль",
+                    "description": "Опис автомобіля"
+                  },
+                  "ownerName": {
+                    "type": "string",
+                    "example": "Іван Петров",
+                    "description": "Ім'я власника"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "minLength": 6,
+                    "example": "123456789",
+                    "description": "Номер телефону власника"
+                  }
                 }
               }
             }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "Успішно додано"
@@ -63,16 +63,20 @@
             "in": "query",
             "description": "Номер сторінки",
             "required": false,
-            "type": "integer",
-            "default": 0
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
           },
           {
             "name": "perPage",
             "in": "query",
             "description": "Кількість елементів на сторінці",
             "required": false,
-            "type": "integer",
-            "default": 10
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
           }
         ],
         "responses": {
@@ -91,7 +95,9 @@
             "in": "path",
             "description": "Ідентифікатор",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -104,37 +110,35 @@
     "/api/statistic/": {
       "post": {
         "summary": "Додати статистику лістингу",
-        "parameters": [
-          {
-            "name": "statistics",
-            "in": "body",
-            "description": "Дані про статистику",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "enum": [
-                    "watch",
-                    "goal"
-                  ],
-                  "description": "Тип події (watch - перехід на сторінку або goal - клік на мобільний)"
-                }
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "watch",
+                      "goal"
+                    ],
+                    "description": "Тип події (watch - перехід на сторінку або goal - клік на мобільний)"
+                  },
+                  "autoId": {
+                    "type": "string",
+                    "default": "1",
+                    "description": "Ідентифікатор лістингу"
+                  }
+                },
+                "required": ["type", "autoId"]
               }
             }
-          },
-          {
-            "name": "autoId",
-            "in": "path",
-            "description": "Ідентифікатор",
-            "required": true,
-            "type": "string"
           }
-        ],
+        },
         "responses": {
           "201": {
-            "description": "Статистика автомобіля додана успішно"
+            "description": "Статистика лістингу додана успішно"
           }
         }
       }
