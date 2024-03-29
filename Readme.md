@@ -12,7 +12,8 @@
 ```bash
 git clone https://github.com/dimatk01/listing-analytics-api.git
 cd listing-analytics-api
-npm install
+npm ci
+mpm run migrate:dev
 npm start:dev
 ```
 

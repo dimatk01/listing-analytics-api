@@ -7,7 +7,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "start:dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts",
-    "build": " tsc",
+    "build": "tsc",
+    "migrate:dev": "ts-node SQL/init.ts",
     "start:prod": "node dist/SQL/init.js && node dist/src/app.js",
     "format": "prettier --write \"src/**/*.ts\""
   },
