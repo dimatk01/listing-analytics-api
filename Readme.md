@@ -31,6 +31,7 @@ DB_USERNAME=postgres
 DB_PASSWORD=root
 DB_NAME=db_name
 APP_PORT=3000
+BASE_HOST=http://localhost:3000
 ```
 
 ### Технології

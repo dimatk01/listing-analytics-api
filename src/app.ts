@@ -11,6 +11,7 @@ import { responseMiddleware } from './middleware/responseMiddleware'
 import { join } from 'path'
 import { koaSwagger } from 'koa2-swagger-ui'
 import serve from 'koa-static'
+import "../public/swagger3.json"
 
 config()
 
@@ -25,18 +26,17 @@ async function startServer() {
       koaSwagger({
         routePrefix: 'docs',
         swaggerOptions: {
-          url: 'http://localhost:3000/swagger3.json',
+          url: `${process.env.BASE_HOST}/swagger3.json`,
         },
       }),
     )
-    .use(serve(join(__dirname)))
+    .use(serve(join(__dirname, "..","public")))
     .use(responseMiddleware)
     .use(cors())
     .use(bodyParser())
     .use(router.routes())
     .use(router.allowedMethods())
     .use(errorMiddleware)
-  console.log(join(__dirname, '..', 'public'))
   const port = process.env.APP_PORT
   router.stack.forEach((layer) => logger.info('Mapped ' + layer.path))
   app.listen(port, () => logger.info(`Server started at ${port} port`))
